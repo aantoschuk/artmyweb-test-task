@@ -5,6 +5,8 @@ import App from "./pages/App";
 
 import "./index.css";
 
+import "./api/axios-mock";
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <App />
