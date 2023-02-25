@@ -1,9 +1,7 @@
 interface IMark {
-  subjectCode: {
-    subjectTitle: string;
-    totalMarks: number;
-    marksObtained: number;
-  }
+  subjectTitle: string;
+  totalMarks: number;
+  marksObtained: number;
 }
 
 interface IStudent {

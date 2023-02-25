@@ -3,6 +3,10 @@ import { useEffect } from "react";
 import { loadStudents } from "@/redux/student/studentReducer";
 import { useTypedDispatch, useTypedSelector } from "@/redux/hooks";
 
+import { Table } from "./components/table";
+
+import { AppStyled as Styled } from "./app.styled";
+
 const App = () => {
   const dispatch = useTypedDispatch();
 
@@ -15,12 +19,10 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <Styled.Container>
       <h1>Main Page</h1>
-      {students &&
-        students.map((student) => <p key={student.name}>{student.name}</p>)}
-      {loading && <h1>Loading...</h1>}
-    </div>
+      {students && <Table students={students} />}
+    </Styled.Container>
   );
 };
 
