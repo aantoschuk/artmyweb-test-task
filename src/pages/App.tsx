@@ -1,20 +1,25 @@
 import { useEffect } from "react";
 
-import { instance } from "../api/api";
+import { loadStudents } from "@/redux/student/studentReducer";
+import { useTypedDispatch, useTypedSelector } from "@/redux/hooks";
 
 const App = () => {
-  const makeRequest = async () => {
-    const response = await instance.get("/students");
-    console.log(response.data);
-  };
+  const dispatch = useTypedDispatch();
+
+  const { students, loading } = useTypedSelector(
+    (state) => state.studentReducer
+  );
 
   useEffect(() => {
-    makeRequest();
-  }, []);
+    dispatch(loadStudents());
+  }, [dispatch]);
 
   return (
     <div>
       <h1>Main Page</h1>
+      {students &&
+        students.map((student) => <p key={student.name}>{student.name}</p>)}
+      {loading && <h1>Loading...</h1>}
     </div>
   );
 };
