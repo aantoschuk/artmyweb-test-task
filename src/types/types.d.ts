@@ -11,3 +11,8 @@ interface IStudent {
   totalLectures: number;
   marks: IMark[];
 }
+
+interface IFetchStudentsPayload {
+  search: string;
+  page: number;
+}

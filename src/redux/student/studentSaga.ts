@@ -1,32 +1,34 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { takeEvery, call, put, CallEffect, PutEffect, SagaReturnType, StrictEffect } from 'redux-saga/effects';
+import { call, put, StrictEffect, debounce } from 'redux-saga/effects';
 
 import { instance } from '@/api/api';
 
 import { loadStudents, loadedStudents } from './studentReducer';
+
 /**
- * 
- * @param { number } initialPostion: starting point 
+ * Accepts 'search: string' and 'page: number' as object to form query string
+ * @param {Object} payload 
+ * @returns arrays of students
  */
-const makeRequest = async (initialPostion = 0) => {
-  // how many students do we wont to fetch at one time
-  const step = 20;
-  // find range of students
-  const currentPosition = initialPostion + step;
-  // make a request to fake api
-  const response = await instance.get("/students");
-  return response.data.slice(initialPostion, currentPosition);
+const makeRequest = async (payload: IFetchStudentsPayload) => {
+  const { search, page } = payload;
+  /**
+   * We pass as payload offset/page and query param for searching
+   */
+  const response = await instance.get(`/students?q=${search}&_page=${page}&_limit=20`);
+  return response.data;
 };
 
 export function* studentSaga() {
-  yield takeEvery(loadStudents.toString(), studentHelper);
+  // should be equal to deboucne technique 
+  yield debounce(500, loadStudents.toString(), studentHelper);
 }
 
 /**
  * not sure if it proper but seems works
  * Generator<call, retunrType, callResult>
  */
-export function* studentHelper(): Generator<StrictEffect, void, IStudent[]> {
-  const response = yield call(makeRequest, 20);
+export function* studentHelper(action: PayloadAction<IFetchStudentsPayload>): Generator<StrictEffect, void, IStudent[]> {
+  const response = yield call(makeRequest, action.payload);
   yield put({ type: loadedStudents.type, payload: response });
 }

@@ -6,6 +6,10 @@ interface IStudentReducer {
   error: string | undefined;
 }
 
+interface IPayload {
+  payload: IFetchStudentsPayload
+}
+
 const initialState: IStudentReducer = {
   students: [],
   loading: false,
@@ -16,12 +20,13 @@ export const studentReducer = createSlice({
   name: 'studentReducer',
   initialState,
   reducers: {
-    loadStudents: (state) => {
+    loadStudents: (state, _payload: IPayload) => {
       state.loading = true
     },
     loadedStudents: (state, payload) => {
       state.loading = false;
       state.students = [
+        ...state.students,
         ...payload.payload
       ]
     }
