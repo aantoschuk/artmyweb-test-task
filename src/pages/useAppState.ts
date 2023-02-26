@@ -35,7 +35,7 @@ export const useAppState = () => {
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value)
-    dispatch(searchStudents({ search: query, page: 1 }));
+    dispatch(searchStudents({ search: value, page: 1 }));
 
   };
 
