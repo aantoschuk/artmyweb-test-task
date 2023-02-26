@@ -27,7 +27,7 @@ export const Table = (props: IProps) => {
         </Styled.THead>
         <Styled.TBody padding={10} border>
           {students.map((student, index) => (
-            <tr key={student.name}>
+            <Styled.TR key={student.name}>
               <td>{index + 1}</td>
               <td>{student.name}</td>
               <td>
@@ -38,7 +38,7 @@ export const Table = (props: IProps) => {
               <td>
                 <Marks marks={student.marks} />
               </td>
-            </tr>
+            </Styled.TR>
           ))}
         </Styled.TBody>
       </Styled.Table>

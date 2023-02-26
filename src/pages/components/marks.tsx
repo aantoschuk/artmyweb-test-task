@@ -22,11 +22,11 @@ export const Marks = (props: IProps) => {
         </Styled.THead>
         <Styled.TBody padding={2}>
           {marks.map((mark, index) => (
-            <tr key={uid + index}>
+            <Styled.TR key={uid + index}>
               <td>{mark.subjectTitle}</td>
               <td>{mark.totalMarks}</td>
               <td>{mark.marksObtained}</td>
-            </tr>
+            </Styled.TR>
           ))}
         </Styled.TBody>
       </Styled.Table>
