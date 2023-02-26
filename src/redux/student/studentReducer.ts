@@ -23,6 +23,13 @@ export const studentReducer = createSlice({
     loadStudents: (state, _payload: IPayload) => {
       state.loading = true
     },
+    searchStudents: (state, _payload: IPayload) => {
+      state.loading = true;
+    },
+    fetchFilteredStudents: (state, payload) => {
+      state.loading = false;
+      state.students = payload.payload
+    },
     loadedStudents: (state, payload) => {
       state.loading = false;
       state.students = [
@@ -33,4 +40,4 @@ export const studentReducer = createSlice({
   },
 });
 
-export const { loadStudents, loadedStudents } = studentReducer.actions;
+export const { loadStudents, loadedStudents, searchStudents, fetchFilteredStudents } = studentReducer.actions;

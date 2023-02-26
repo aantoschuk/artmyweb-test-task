@@ -11,7 +11,7 @@ interface IProps {
 }
 
 export const Table = (props: IProps) => {
-  const { students, loader } = props;
+  const { students, loader, loading } = props;
   return (
     <>
       <Styled.Table width={80}>
@@ -42,7 +42,8 @@ export const Table = (props: IProps) => {
           ))}
         </Styled.TBody>
       </Styled.Table>
-      <div ref={loader} />
+      {loading && <p>Loading...</p>}
+      <Styled.Intersection ref={loader} />
     </>
   );
 };

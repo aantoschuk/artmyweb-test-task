@@ -35,4 +35,7 @@ export const TableStyled = {
     display: flex;
     justify-content: center;
   `,
+  Intersection: styled.div`
+    margin-top: 10px;
+  `,
 }

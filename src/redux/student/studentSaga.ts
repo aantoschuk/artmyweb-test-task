@@ -3,7 +3,7 @@ import { call, put, StrictEffect, debounce } from 'redux-saga/effects';
 
 import { instance } from '@/api/api';
 
-import { loadStudents, loadedStudents } from './studentReducer';
+import { fetchFilteredStudents, loadStudents, loadedStudents, searchStudents } from './studentReducer';
 
 /**
  * Accepts 'search: string' and 'page: number' as object to form query string
@@ -24,11 +24,20 @@ export function* studentSaga() {
   yield debounce(500, loadStudents.toString(), studentHelper);
 }
 
+export function* filteredStudentsSaga() {
+  // should be equal to deboucne technique 
+  yield debounce(500, searchStudents.toString(), studentHelper);
+}
+
 /**
  * not sure if it proper but seems works
  * Generator<call, retunrType, callResult>
  */
 export function* studentHelper(action: PayloadAction<IFetchStudentsPayload>): Generator<StrictEffect, void, IStudent[]> {
   const response = yield call(makeRequest, action.payload);
-  yield put({ type: loadedStudents.type, payload: response });
+  if (action.type == searchStudents.type) {
+    yield put({ type: fetchFilteredStudents.type, payload: response });
+  } else {
+    yield put({ type: loadedStudents.type, payload: response });
+  }
 }

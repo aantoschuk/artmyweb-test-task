@@ -1,12 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 
-import { loadStudents } from '@/redux/student/studentReducer';
 import { useTypedDispatch, useTypedSelector } from "@/redux/hooks";
+import { loadStudents, searchStudents } from '@/redux/student/studentReducer';
+
+const option: IntersectionObserverInit = {
+  root: null,
+  rootMargin: "10px",
+  threshold: 0
+}
 
 export const useAppState = () => {
   const dispatch = useTypedDispatch();
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const [query, setQuery] = useState('');
 
   const loader = useRef(null);
 
@@ -14,29 +22,43 @@ export const useAppState = () => {
     (state) => state.studentReducer
   );
 
+  /**
+   * fires on every intersection change
+   * and check it, if we reach bottom of the table 
+   */
   useEffect(() => {
-    dispatch(loadStudents({ search: "", page }));
-  }, [dispatch, page]);
+    if (isIntersecting) {
+      dispatch(loadStudents({ search: query, page }));
+    }
+  }, [isIntersecting])
 
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setQuery(value)
+    dispatch(searchStudents({ search: query, page: 1 }));
+
+  };
 
   const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
     const target = entries[0];
+    // update instersection state
+    setIsIntersecting(target.isIntersecting);
+    /**
+     * We reach bottom of the page when data is fetching and there is no array
+     * so we made initial fetch, from the first page
+     *  */
     if (target.isIntersecting) {
-      setPage((prevValue) => prevValue + 1);
+      setPage(prev => prev + 1);
     }
   }, [])
 
+
   useEffect(() => {
-    const option: IntersectionObserverInit = {
-      root: null,
-      rootMargin: "20px",
-      threshold: 0
-    }
     const observer = new IntersectionObserver(handleObserver, option);
     if (loader.current) {
       observer.observe(loader.current);
     }
   }, [handleObserver]);
 
-  return { students, loading, loader };
+  return { students, loading, loader, handleSearch, query };
 }
