@@ -1,4 +1,7 @@
 import { RefObject } from "react";
+import { Bars } from "react-loader-spinner";
+
+import { COLORS } from "@/constants/colors";
 
 import { Marks } from "./marks";
 
@@ -42,7 +45,14 @@ export const Table = (props: IProps) => {
           ))}
         </Styled.TBody>
       </Styled.Table>
-      {loading && <p>Loading...</p>}
+      {loading && (
+        <Bars
+          height="80"
+          width="80"
+          color={COLORS.paynesGray}
+          ariaLabel="loading"
+        />
+      )}
       <Styled.Intersection ref={loader} />
     </>
   );
