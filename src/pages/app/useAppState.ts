@@ -35,7 +35,16 @@ export const useAppState = () => {
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value)
-    dispatch(searchStudents({ search: value, page: 1 }));
+    //  check if string has atleast 2 characters
+    if (value.length > 2) {
+      // reset page to fetch from the start
+      setPage(1);
+      dispatch(searchStudents({ search: value, page: 1 }));
+      // if input cleared
+    } else if (value.length === 0) {
+      setPage(1);
+      dispatch(searchStudents({ search: '', page: 1 }));
+    }
 
   };
 
