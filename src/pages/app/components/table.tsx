@@ -45,6 +45,7 @@ export const Table = (props: IProps) => {
           ))}
         </Styled.TBody>
       </Styled.Table>
+      <Styled.Intersection ref={loader} />
       {loading && (
         <Bars
           height="80"
@@ -53,7 +54,6 @@ export const Table = (props: IProps) => {
           ariaLabel="loading"
         />
       )}
-      <Styled.Intersection ref={loader} />
     </>
   );
 };
