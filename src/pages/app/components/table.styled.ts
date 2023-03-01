@@ -45,6 +45,7 @@ export const TableStyled = {
 
   Hovarable: styled.div`
     &:hover {
+      color: black;
       background-color: ${COLORS.azure};
       box-shadow: 0 0 0 1px ${COLORS.paynesGray};
     }

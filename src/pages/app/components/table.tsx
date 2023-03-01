@@ -25,7 +25,14 @@ export const Table = (props: IProps) => {
           <Styled.Cell>Lectures Attended</Styled.Cell>
           <Styled.Cell>Total Lectures</Styled.Cell>
         </Styled.Head>
-        <Styled.Body color="black">
+        <Styled.Body
+          color={
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "white"
+              : "black"
+          }
+        >
           {students.map((student, index) => (
             <Student student={student} index={index} key={index + 1} />
           ))}
