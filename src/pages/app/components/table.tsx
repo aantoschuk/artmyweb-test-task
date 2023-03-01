@@ -3,7 +3,7 @@ import { Bars } from "react-loader-spinner";
 
 import { COLORS } from "@/constants/colors";
 
-import { Marks } from "./marks";
+import { Student } from "./student";
 
 import { TableStyled as Styled } from "./table.styled";
 
@@ -17,34 +17,20 @@ export const Table = (props: IProps) => {
   const { students, loader, loading } = props;
   return (
     <>
-      <Styled.Table width={80}>
-        <Styled.THead>
-          <tr>
-            <th>№</th>
-            <th>Name</th>
-            <th>Avatar</th>
-            <th>Lectures Attended</th>
-            <th>Total Lectures</th>
-            <th>Marks</th>
-          </tr>
-        </Styled.THead>
-        <Styled.TBody padding={10} border>
+      <Styled.Wrapper>
+        <Styled.Head color="white" columns={5}>
+          <Styled.Cell>№</Styled.Cell>
+          <Styled.Cell>Name</Styled.Cell>
+          <Styled.Cell>Avatar</Styled.Cell>
+          <Styled.Cell>Lectures Attended</Styled.Cell>
+          <Styled.Cell>Total Lectures</Styled.Cell>
+        </Styled.Head>
+        <Styled.Body color="black">
           {students.map((student, index) => (
-            <Styled.TR key={student.name}>
-              <td>{index + 1}</td>
-              <td>{student.name}</td>
-              <td>
-                <img alt="student avatar" src={student.avatarURL} />
-              </td>
-              <td>{student.lecturesAttended}</td>
-              <td>{student.totalLectures}</td>
-              <td>
-                <Marks marks={student.marks} />
-              </td>
-            </Styled.TR>
+            <Student student={student} index={index} key={index + 1} />
           ))}
-        </Styled.TBody>
-      </Styled.Table>
+        </Styled.Body>
+      </Styled.Wrapper>
       <Styled.Intersection ref={loader} />
       {loading && (
         <Bars

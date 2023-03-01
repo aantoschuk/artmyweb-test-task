@@ -5,7 +5,7 @@ import { loadStudents, searchStudents } from '@/redux/student/studentReducer';
 
 const option: IntersectionObserverInit = {
   root: null,
-  rootMargin: "10px",
+  rootMargin: "0px",
   threshold: 0
 }
 

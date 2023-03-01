@@ -4,10 +4,8 @@ import { COLORS } from '@/constants/colors';
 import { device } from '@/constants/media';
 
 export const TableStyled = {
-  Table: styled.table<{ width: number }>`
-    border-collapse: collapse;
-    width: ${props => (props.width)}%;
-    
+  Wrapper: styled.div`
+    width: 90%;
     @media ${device.mobileS} {
       width: 100%;
       font-size: 0.5em;
@@ -20,50 +18,54 @@ export const TableStyled = {
       font-size: 1em;
     }
   `,
-  THead: styled.thead`
+  Head: styled.div < { color: string, columns: number } > `
+    display: grid;
+    padding: 5px 0;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+    color: ${props => (props.color)};
+    grid-template-columns: repeat(${props => (props.columns)}, 1fr); 
     background-color: ${COLORS.paynesGray};
     border: 1px solid ${COLORS.paynesGray};
-    th {
-      padding: 10px;
-      color: white;
-      border: 1px solid transparent;
-      &:first-child {
-        border-radius: 10px 0 0 0;
-      }
-      &:last-child {
-        border-radius: 0 10px 0 0;
-      }
-      @media ${device.mobileS} {
-        padding: 2px;
-      }
-      @media ${device.mobileM} {
-        padding: 5px;
-      }
-      @media ${device.tablet} {
-        padding: 10px;
-      }
-    }
+
   `,
-  TBody: styled.tbody<{ padding: number, border?: boolean }>`
+
+  Cell: styled.div`
     text-align: center;
-    vertical-align: top;
-    box-shadow: ${props => (props.border && `0 0 0 1px ${COLORS.paynesGray} inset`)};
-    border-radius: 0 0 10px 10px;
-    td {
-      padding: ${props => (props.padding)}px 0;
-    }
   `,
-  TR: styled.tr`
-    transition: ease-in 0.17s;
+
+  CellContainer: styled.div`
+    cursor: pointer;
+    padding: 8px 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    transition: ease-in 0.2s;
+
+  `,
+
+  Hovarable: styled.div`
     &:hover {
       background-color: ${COLORS.azure};
-      box-shadow: 0 0 0 1px ${COLORS.paynesGray} inset;
+      box-shadow: 0 0 0 1px ${COLORS.paynesGray};
     }
   `,
-  Marks: styled.div`
-    display: flex;
-    justify-content: center;
+  Body: styled.div<{ color: string }>`
+    color: ${props => (props.color)};
+    border: 1px solid ${COLORS.paynesGray};
   `,
+
+  Collapsible: styled.div<{ isVisible: boolean }>`
+    margin: 5px 0;
+    padding: 0 5px;
+    display: ${props => (props.isVisible ? 'block' : 'none')};
+    `,
+
+  Marks: styled.div`
+    display: grid;
+    text-align: center;
+    grid-template-columns: repeat(3, 1fr); 
+  `,
+
   Intersection: styled.div`
     margin-top: 10px;
   `,
